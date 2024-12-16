@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
 from app.dependencies import get_secret_service
-from app.models.secrets import PassphraseRequest, SecretKeyResponse, SecretRequest, SecretResponse
+from app.models.secret_model import PassphraseRequest, SecretKeyResponse, SecretRequest, SecretResponse
 from app.services.secret_services import SecretService
 
 router = APIRouter()
