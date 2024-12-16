@@ -1,5 +1,6 @@
 from typing import Optional
 
+from app.config import TTL_EXPIRE_SECONDS
 from app.models.secrets import Secret
 
 
@@ -12,7 +13,7 @@ class SecretRepository:
         if not self.__indexes_initialized:
             existing_indexes = await self.__collection.index_information()
             if "expiration_1" not in existing_indexes:
-                await self.__collection.create_index([("expiration", 1)], expireAfterSeconds=3600)
+                await self.__collection.create_index([("expiration", 1)], expireAfterSeconds=TTL_EXPIRE_SECONDS)
             self.__indexes_initialized = True
 
     async def create(self, secret: Secret) -> None:
