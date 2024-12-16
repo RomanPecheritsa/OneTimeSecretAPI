@@ -11,7 +11,7 @@ from app.services.user_service import UserService
 async def get_secret_repository():
     repo = SecretRepository(db_connection.db)
     await repo.initialize_indexes()
-    return SecretRepository(db_connection.db)
+    return repo
 
 
 async def get_secret_service(repository: SecretRepository = Depends(get_secret_repository)):
