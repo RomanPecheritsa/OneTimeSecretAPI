@@ -25,7 +25,7 @@ class SecretService:
         secret_instance = Secret(
             secret_key=secret_key,
             secret=encrypted_secret,
-            expiration=datetime.now(timezone.utc) + timedelta(seconds=TTL_EXPIRE_SECONDS),
+            expiration=datetime.now(timezone.utc) + timedelta(seconds=int(TTL_EXPIRE_SECONDS)),
         )
         await self.__repository.create_secret(secret_instance)
         return secret_key
