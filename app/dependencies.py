@@ -14,9 +14,7 @@ async def get_secret_repository():
     return SecretRepository(db_connection.db)
 
 
-async def get_secret_service(
-    repository: SecretRepository = Depends(get_secret_repository),
-):
+async def get_secret_service(repository: SecretRepository = Depends(get_secret_repository)):
     return SecretService(SALT, repository)
 
 
