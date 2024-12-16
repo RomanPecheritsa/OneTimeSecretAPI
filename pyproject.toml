@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "onetimesecret"
+version = "0.1.0"
+description = ""
+authors = ["pecheritsa <pecheritsa.roman@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.6"
+uvicorn = "^0.34.0"
+cryptography = "^44.0.0"
+pyjwt = "^2.10.1"
+passlib = "^1.7.4"
+python-dotenv = "^1.0.1"
+motor = "^3.6.0"
+pytest = "^8.3.4"
+pytest-asyncio = "^0.25.0"
+pytest-cov = "^6.0.0"
+python-multipart = "^0.0.20"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
