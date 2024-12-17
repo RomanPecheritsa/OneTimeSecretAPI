@@ -11,6 +11,7 @@ class Secret(BaseModel):
     :param secret: Зашифрованный секрет.
     :param expiration: Время истечения действия секрета.
     """
+
     secret_key: str
     secret: str
     expiration: datetime
@@ -23,6 +24,7 @@ class SecretRequest(BaseModel):
     :param secret: Текст секрета, который будет зашифрован.
     :param passphrase: Фраза для шифрования секрета.
     """
+
     secret: str
     passphrase: str
 
@@ -36,6 +38,7 @@ class PassphraseRequest(BaseModel):
 
     :param passphrase: Фраза для расшифровки секрета.
     """
+
     passphrase: str
 
     class Config:
@@ -48,6 +51,7 @@ class SecretKeyResponse(BaseModel):
 
     :param secret_key: Уникальный ключ секрета.
     """
+
     secret_key: str
 
     class Config:
@@ -60,6 +64,7 @@ class SecretResponse(BaseModel):
 
     :param secret: Расшифрованный секрет.
     """
+
     secret: str
 
     class Config:

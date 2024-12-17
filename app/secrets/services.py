@@ -17,6 +17,7 @@ class SecretService:
     :param salt: Соль для генерации ключа из кодовой фразы.
     :param repository: Репозиторий для хранения и извлечения секретов.
     """
+
     def __init__(self, salt: str, repository) -> None:
         self.salt = salt.encode()
         self.__repository = repository

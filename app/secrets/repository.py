@@ -12,6 +12,7 @@ class SecretRepository:
 
     :param db: Соединение с базой данных, предоставляющее доступ к коллекции "secrets".
     """
+
     def __init__(self, db: AsyncIOMotorCollection):
         """
         Инициализация репозитория с коллекцией "secrets".
