@@ -19,12 +19,21 @@ class UserRequest(BaseModel):
             raise ValueError("Password must contain at least one special character.")
         return value
 
+    class Config:
+        json_schema_extra = {"example": {"username": "my_username", "password": "mySuperPassword99!"}}
+
 
 class UserResponse(BaseModel):
     id: str
     username: str
 
+    class Config:
+        json_schema_extra = {"example": {"id": "67613fe0f548ce39642a8644", "username": "my_username"}}
+
 
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str
+
+    class Config:
+        json_schema_extra = {"example": {"access_token": "my_access_token", "token_type": "bearer"}}
