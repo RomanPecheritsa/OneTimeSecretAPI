@@ -3,8 +3,7 @@ from base64 import urlsafe_b64decode
 import pytest
 from cryptography.fernet import InvalidToken
 
-from app.utils.crypto_utils import (decrypt, encrypt,
-                                    generate_key_from_passphrase)
+from app.utils.crypto_utils import decrypt, encrypt, generate_key_from_passphrase
 
 
 def test_generate_key_from_passphrase():
