@@ -39,10 +39,6 @@ async def generate_secret(
     :param service: Сервис для работы с секретами.
     :param current_user: Текущий пользователь, получаемый через зависимость.
     :return: Ответ с уникальным ключом секрета.
-
-    Возможные ошибки:
-    - 400: Неверные данные (например, неправильный секрет или кодовая фраза).
-    - 500: Внутренняя ошибка сервера.
     """
     try:
         secret_key = await service.generate_secret(request.secret, request.passphrase)
@@ -89,11 +85,6 @@ async def get_secret(
     :param service: Сервис для работы с секретами.
     :param current_user: Текущий пользователь, получаемый через зависимость.
     :return: Ответ с секретом.
-
-    Возможные ошибки:
-    - 400: Неверная кодовая фраза.
-    - 404: Секрет с данным ключом не найден.
-    - 500: Внутренняя ошибка сервера.
     """
     try:
         secret = await service.get_secret(secret_key, request.passphrase)
