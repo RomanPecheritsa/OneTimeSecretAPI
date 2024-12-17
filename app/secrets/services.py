@@ -11,14 +11,33 @@ from app.utils.crypto_utils import decrypt, encrypt, generate_key_from_passphras
 
 
 class SecretService:
+    """
+    Сервис для работы с секретами, включая генерацию, хранение и расшифровку.
+
+    :param salt: Соль для генерации ключа из кодовой фразы.
+    :param repository: Репозиторий для хранения и извлечения секретов.
+    """
     def __init__(self, salt: str, repository) -> None:
         self.salt = salt.encode()
         self.__repository = repository
 
     async def generate_key(self, passphrase: str) -> bytes:
+        """
+        Генерация ключа для шифрования/расшифровки на основе кодовой фразы.
+
+        :param passphrase: Кодовая фраза, на основе которой генерируется ключ.
+        :return: Сгенерированный ключ.
+        """
         return generate_key_from_passphrase(passphrase.encode(), self.salt)
 
     async def generate_secret(self, secret: str, passphrase: str) -> str:
+        """
+        Генерация секрета, его шифрование и сохранение в репозитории.
+
+        :param secret: Секрет, который нужно зашифровать.
+        :param passphrase: Кодовая фраза для генерации ключа шифрования.
+        :return: Уникальный ключ секрета.
+        """
         key = await self.generate_key(passphrase)
         encrypted_secret = encrypt(secret, key)
         secret_key = str(uuid.uuid4())
@@ -31,6 +50,14 @@ class SecretService:
         return secret_key
 
     async def get_secret(self, secret_key: str, passphrase: str) -> Optional[str]:
+        """
+        Извлечение секрета по ключу, расшифровка его с использованием кодовой фразы.
+
+        :param secret_key: Ключ секрета.
+        :param passphrase: Кодовая фраза для расшифровки секрета.
+        :return: Расшифрованный секрет.
+        :raises HTTPException: Если секрет не найден или кодовая фраза неверная.
+        """
         secret = await self.__repository.get_secret(secret_key)
         if secret is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Secret not found")

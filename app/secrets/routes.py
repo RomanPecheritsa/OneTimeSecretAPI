@@ -32,6 +32,18 @@ async def generate_secret(
     service: SecretService = Depends(get_secret_service),
     current_user: str = Depends(get_current_user),
 ) -> SecretKeyResponse:
+    """
+    Эндпоинт для генерации нового секрета.
+
+    :param request: Объект, содержащий секрет и кодовую фразу для генерации секрета.
+    :param service: Сервис для работы с секретами.
+    :param current_user: Текущий пользователь, получаемый через зависимость.
+    :return: Ответ с уникальным ключом секрета.
+
+    Возможные ошибки:
+    - 400: Неверные данные (например, неправильный секрет или кодовая фраза).
+    - 500: Внутренняя ошибка сервера.
+    """
     try:
         secret_key = await service.generate_secret(request.secret, request.passphrase)
         return SecretKeyResponse(secret_key=secret_key)
@@ -69,6 +81,20 @@ async def get_secret(
     service: SecretService = Depends(get_secret_service),
     current_user: str = Depends(get_current_user),
 ) -> SecretResponse:
+    """
+    Эндпоинт для получения секрета по ключу.
+
+    :param secret_key: Ключ секрета.
+    :param request: Объект, содержащий кодовая фраза для расшифровки секрета.
+    :param service: Сервис для работы с секретами.
+    :param current_user: Текущий пользователь, получаемый через зависимость.
+    :return: Ответ с секретом.
+
+    Возможные ошибки:
+    - 400: Неверная кодовая фраза.
+    - 404: Секрет с данным ключом не найден.
+    - 500: Внутренняя ошибка сервера.
+    """
     try:
         secret = await service.get_secret(secret_key, request.passphrase)
         return SecretResponse(secret=secret)
