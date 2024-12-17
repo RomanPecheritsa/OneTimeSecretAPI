@@ -7,8 +7,7 @@ from fastapi import HTTPException, status
 
 from app.core.config import TTL_EXPIRE_SECONDS
 from app.secrets.models import Secret
-from app.utils.crypto_utils import (decrypt, encrypt,
-                                    generate_key_from_passphrase)
+from app.utils.crypto_utils import decrypt, encrypt, generate_key_from_passphrase
 
 
 class SecretService:
