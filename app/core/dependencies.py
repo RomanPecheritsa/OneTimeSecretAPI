@@ -3,8 +3,8 @@ from fastapi import Depends
 from app.core.config import SALT
 from app.core.db import db_connection
 from app.secrets.repository import SecretRepository
-from app.users.repository import UserRepository
 from app.secrets.services import SecretService
+from app.users.repository import UserRepository
 from app.users.services import UserService
 
 
