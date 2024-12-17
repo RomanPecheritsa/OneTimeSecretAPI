@@ -4,11 +4,29 @@ from pydantic import BaseModel, field_validator
 
 
 class UserRequest(BaseModel):
+    """
+    Модель запроса пользователя для регистрации или входа в систему.
+
+    :param username: Имя пользователя.
+    :param password: Пароль пользователя, который должен удовлетворять определённым требованиям.
+    """
+
     username: str
     password: str
 
     @field_validator("password")
-    def validate_password(cls, value):
+    def validate_password(cls, value: str) -> str:
+        """
+        Валидатор пароля, проверяющий соответствие нескольких условий:
+        - Минимальная длина 8 символов.
+        - Наличие хотя бы одной заглавной буквы.
+        - Наличие хотя бы одной цифры.
+        - Наличие хотя бы одного специального символа.
+
+        :param value: Пароль пользователя.
+        :raises ValueError: Если пароль не соответствует условиям.
+        :return: Валидированный пароль.
+        """
         if len(value) < 8:
             raise ValueError("Password must be at least 8 characters long.")
         if not re.search(r"[A-Z]", value):
@@ -24,6 +42,13 @@ class UserRequest(BaseModel):
 
 
 class UserResponse(BaseModel):
+    """
+    Модель ответа с данными о пользователе.
+
+    :param id: Уникальный идентификатор пользователя.
+    :param username: Имя пользователя.
+    """
+
     id: str
     username: str
 
@@ -32,6 +57,13 @@ class UserResponse(BaseModel):
 
 
 class TokenResponse(BaseModel):
+    """
+    Модель ответа с данными о токене доступа.
+
+    :param access_token: Токен доступа.
+    :param token_type: Тип токена (например, "bearer").
+    """
+
     access_token: str
     token_type: str
 

@@ -29,6 +29,16 @@ async def register_user(
     request: UserRequest,
     service: UserService = Depends(get_user_service),
 ) -> UserResponse:
+    """
+    Регистрация нового пользователя.
+
+    Регистрирует нового пользователя с предоставленным именем пользователя и паролем.
+
+    :param request: Запрос с именем пользователя и паролем.
+    :param service: Сервис для работы с пользователями.
+    :return: Ответ с данными пользователя, включая ID и имя пользователя.
+    :raises HTTPException: В случае ошибки, например, если пользователь уже существует.
+    """
     try:
         user = await service.register_user(request.username, request.password)
         return UserResponse(id=str(user["_id"]), username=user["username"])
@@ -56,6 +66,16 @@ async def login(
     request: UserRequest,
     service: UserService = Depends(get_user_service),
 ) -> TokenResponse:
+    """
+    Авторизация пользователя для получения токена доступа.
+
+    Проверяет имя пользователя и пароль, и, если данные верны, выдает токен доступа.
+
+    :param request: Запрос с именем пользователя и паролем.
+    :param service: Сервис для работы с пользователями.
+    :return: Ответ с токеном доступа.
+    :raises HTTPException: В случае ошибки, например, если имя пользователя или пароль неверны.
+    """
     try:
         token = await service.authenticate_user(request.username, request.password)
         return TokenResponse(access_token=token, token_type="bearer")

@@ -11,7 +11,7 @@ app = FastAPI(
     contact={
         "name": "Roman Pecheritsa",
         "email": "pecheritsa.roman@gmail.com",
-    }
+    },
 )
 
 app.add_middleware(
