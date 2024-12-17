@@ -5,9 +5,9 @@ from typing import Optional
 from cryptography.fernet import InvalidToken
 from fastapi import HTTPException, status
 
-from app.config import TTL_EXPIRE_SECONDS
-from app.models.secret_model import Secret
-from app.utils.encryption import decrypt, encrypt, generate_key_from_passphrase
+from app.core.config import TTL_EXPIRE_SECONDS
+from app.secrets.models import Secret
+from app.utils.crypto_utils import decrypt, encrypt, generate_key_from_passphrase
 
 
 class SecretService:

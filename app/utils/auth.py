@@ -2,8 +2,8 @@ import jwt
 from fastapi import Depends, HTTPException
 from starlette import status
 
-from app.config import ALGORITHM, SECRET_KEY
-from app.routes.user_route import oauth2_scheme
+from app.core.config import ALGORITHM, SECRET_KEY
+from app.users.routes import oauth2_scheme
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)):
