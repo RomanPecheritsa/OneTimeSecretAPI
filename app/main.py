@@ -5,5 +5,5 @@ from app.users.routes import user_router
 
 app = FastAPI(title="One Time Secret")
 
-app.include_router(secret_router, prefix="")
-app.include_router(user_router, prefix="/auth")
+app.include_router(secret_router, prefix="", tags=["Secrets"])
+app.include_router(user_router, prefix="/auth", tags=["Authentication"])
