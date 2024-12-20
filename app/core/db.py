@@ -1,6 +1,6 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.config import MONGODB_NAME, MONGODB_URI
+from app.core.config import MONGODB_NAME, MONGODB_URI
 
 
 class MongoDBConnection:

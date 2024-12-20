@@ -2,8 +2,8 @@ from typing import Optional
 
 from motor.motor_asyncio import AsyncIOMotorCollection
 
-from app.config import TTL_EXPIRE_SECONDS
-from app.models.secret_model import Secret
+from app.core.config import TTL_EXPIRE_SECONDS
+from app.secrets.models import Secret
 
 
 class SecretRepository:

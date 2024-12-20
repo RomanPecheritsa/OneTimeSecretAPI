@@ -1,17 +1,17 @@
 from fastapi import Depends
 
-from app.config import SALT
-from app.db import db_connection
-from app.repository.secret_repository import SecretRepository
-from app.repository.user_repository import UserRepository
-from app.services.secret_services import SecretService
-from app.services.user_service import UserService
+from app.core.config import SALT
+from app.core.db import db_connection
+from app.secrets.repository import SecretRepository
+from app.secrets.services import SecretService
+from app.users.repository import UserRepository
+from app.users.services import UserService
 
 
 async def get_secret_repository():
     repo = SecretRepository(db_connection.db)
     await repo.initialize_indexes()
-    return SecretRepository(db_connection.db)
+    return repo
 
 
 async def get_secret_service(repository: SecretRepository = Depends(get_secret_repository)):

@@ -1,10 +1,9 @@
 from fastapi import APIRouter, Depends
 
-from app.dependencies import get_secret_service
-from app.models.secret_model import (PassphraseRequest, SecretKeyResponse,
-                                     SecretRequest, SecretResponse)
-from app.services.secret_services import SecretService
-from app.utils.token import get_current_user
+from app.core.dependencies import get_secret_service
+from app.secrets.models import PassphraseRequest, SecretKeyResponse, SecretRequest, SecretResponse
+from app.secrets.services import SecretService
+from app.utils.auth import get_current_user
 
 secret_router = APIRouter()
 

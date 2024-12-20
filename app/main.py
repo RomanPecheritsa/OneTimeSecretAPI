@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from app.routes.secret_route import secret_router
-from app.routes.user_route import user_router
+from app.secrets.routes import secret_router
+from app.users.routes import user_router
 
 app = FastAPI(title="One Time Secret")
 
