@@ -4,7 +4,7 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from app.core.config import MONGODB_URI, TEST_DATABASE_NAME, TTL_INDEX_SECONDS, SALT
+from app.core.config import MONGODB_URI, SALT, TEST_DATABASE_NAME, TTL_INDEX_SECONDS
 from app.core.dependencies import create_secret_service_and_repository
 from app.main import app
 
@@ -12,9 +12,7 @@ from app.main import app
 @pytest.fixture(scope="module")
 async def setup_service():
     test_secret_repository, test_secret_service = create_secret_service_and_repository(
-        mongodb_uri=MONGODB_URI,
-        db_name=TEST_DATABASE_NAME,
-        salt=SALT
+        mongodb_uri=MONGODB_URI, db_name=TEST_DATABASE_NAME, salt=SALT
     )
     await test_secret_repository.initialize_indexes()
     app.state.secret_service = test_secret_service
@@ -122,13 +120,12 @@ async def test_generate_get_and_verify_secret_deletion(
 async def test_ttl_index_creation():
     client = AsyncIOMotorClient(MONGODB_URI)
     db = client[TEST_DATABASE_NAME]
-    collection = db['secrets']
+    collection = db["secrets"]
 
     indexes = await collection.index_information()
 
-    assert 'expiration_1' in indexes
+    assert "expiration_1" in indexes
 
-    ttl_seconds = indexes['expiration_1'].get('expireAfterSeconds')
+    ttl_seconds = indexes["expiration_1"].get("expireAfterSeconds")
     assert ttl_seconds == int(TTL_INDEX_SECONDS)
     client.close()
-
