@@ -26,3 +26,6 @@ class UserRepository:
 
     async def initialize_indexes(self):
         await self.__collection.create_index("username", unique=True)
+
+    async def clear_all(self) -> None:
+        await self.__collection.delete_many({})
