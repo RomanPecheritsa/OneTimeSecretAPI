@@ -8,9 +8,9 @@ class Secret(BaseModel):
     Модель для представления секрета с ключом, секретным значением и временем истечения.
     """
 
-    secret_key: str  # Ключ секрета
-    secret: str  # Секретное значение
-    expiration: datetime  # Время истечения секрета
+    secret_key: str
+    secret: str
+    expiration: datetime
 
 
 class SecretRequest(BaseModel):
@@ -18,8 +18,8 @@ class SecretRequest(BaseModel):
     Модель для запроса секрета, содержащего секретное значение и кодовую фразу.
     """
 
-    secret: str  # Секретное значение
-    passphrase: str  # Кодовая фраза для доступа к секрету
+    secret: str
+    passphrase: str
 
 
 class PassphraseRequest(BaseModel):
@@ -27,7 +27,7 @@ class PassphraseRequest(BaseModel):
     Модель для запроса кодовой фразы.
     """
 
-    passphrase: str  # Кодовая фраза
+    passphrase: str
 
 
 class SecretKeyResponse(BaseModel):
@@ -35,7 +35,7 @@ class SecretKeyResponse(BaseModel):
     Модель для ответа, содержащего ключ секрета.
     """
 
-    secret_key: str  # Ключ секрета
+    secret_key: str
 
 
 class SecretResponse(BaseModel):
@@ -43,4 +43,4 @@ class SecretResponse(BaseModel):
     Модель для ответа, содержащего секретное значение.
     """
 
-    secret: str  # Секретное значение
+    secret: str
