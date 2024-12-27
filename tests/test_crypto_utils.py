@@ -1,13 +1,16 @@
 from base64 import urlsafe_b64decode
 
 import pytest
-from cryptography.fernet import Fernet, InvalidToken
+from cryptography.fernet import InvalidToken
 
 from app.utils.crypto_utils import decrypt, encrypt, generate_key_from_passphrase
 
 
 def test_generate_key_from_passphrase():
-
+    """
+    Тестирует генерацию ключа из кодовой фразы и соли.
+    Проверяет длину генерируемого ключа.
+    """
     passphrase = b"my_secret_passphrase"
     salt = b"my_secret_salt"
 
@@ -17,6 +20,10 @@ def test_generate_key_from_passphrase():
 
 
 def test_encrypt_decrypt():
+    """
+    Тестирует шифрование и расшифровку секрета.
+    Проверяет, что зашифрованный и расшифрованный секрет совпадают.
+    """
     secret = "my_secret_data"
     passphrase = b"my_secret_passphrase"
     salt = b"my_secret_salt"
@@ -33,6 +40,10 @@ def test_encrypt_decrypt():
 
 
 def test_decrypt_with_wrong_key():
+    """
+    Тестирует расшифровку с неправильным ключом.
+    Проверяет, что при попытке расшифровать с неверным ключом выбрасывается исключение.
+    """
     secret = "my_secret_data"
     passphrase = b"my_secret_passphrase"
     salt = b"my_secret_salt"
@@ -48,6 +59,10 @@ def test_decrypt_with_wrong_key():
 
 
 def test_encrypt_output_is_base64():
+    """
+    Тестирует, что зашифрованный секрет является корректным base64.
+    Проверяет, что результат шифрования можно декодировать как base64.
+    """
     secret = "my_secret_data"
     passphrase = b"my_secret_passphrase"
     salt = b"my_secret_salt"

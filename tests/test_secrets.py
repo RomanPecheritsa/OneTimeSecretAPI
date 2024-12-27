@@ -148,7 +148,6 @@ async def test_generate_get_and_verify_secret_deletion(
     assert response.status_code == 200
     assert response.json() == {"secret": secret_data["correct"]["secret"]}
 
-    # Пытаемся снова получить секрет после его удаления
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         response = await ac.post(
             f"/secrets/{secret_key}",
