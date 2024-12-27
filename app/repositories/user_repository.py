@@ -1,5 +1,7 @@
 from typing import Optional
+
 from motor.motor_asyncio import AsyncIOMotorClient
+
 from app.models.user import User
 
 
@@ -15,9 +17,9 @@ class UserRepository:
         """
         Инициализация репозитория для работы с базой данных MongoDB.
         """
-        self.__client = AsyncIOMotorClient(uri)  # Создаем клиент MongoDB
-        self.__db = self.__client[db_name]      # Получаем базу данных по имени
-        self.__collection = self.__db["users"]  # Получаем коллекцию "users"
+        self.__client = AsyncIOMotorClient(uri)
+        self.__db = self.__client[db_name]
+        self.__collection = self.__db["users"]
 
     async def close(self):
         """
@@ -29,7 +31,7 @@ class UserRepository:
         """
         Создает нового пользователя в базе данных.
         """
-        await self.__collection.insert_one(user.model_dump())  # Вставляем пользователя в коллекцию
+        await self.__collection.insert_one(user.model_dump())
 
     async def get_user(self, username: str) -> Optional[User]:
         """
@@ -37,7 +39,7 @@ class UserRepository:
         """
         user = await self.__collection.find_one({"username": username})
         if user:
-            user["id"] = str(user.pop("_id"))  # Преобразуем _id в строку и добавляем в поле id
+            user["id"] = str(user.pop("_id"))
             return User(**user)
         return None
 

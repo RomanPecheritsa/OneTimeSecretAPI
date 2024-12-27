@@ -18,9 +18,9 @@ class SecretRepository:
         """
         Инициализация репозитория для работы с базой данных MongoDB.
         """
-        self.__client = AsyncIOMotorClient(uri)  # Создаем клиент MongoDB
-        self.__db = self.__client[db_name]  # Получаем базу данных по имени
-        self.__collection = self.__db["secrets"]  # Получаем коллекцию "secrets"
+        self.__client = AsyncIOMotorClient(uri)
+        self.__db = self.__client[db_name]
+        self.__collection = self.__db["secrets"]
 
     async def initialize_indexes(self):
         """
@@ -41,8 +41,8 @@ class SecretRepository:
         """
         Создает новый секрет в базе данных.
         """
-        secret_dict = secret.model_dump()  # Преобразуем объект в словарь
-        await self.__collection.insert_one(secret_dict)  # Вставляем секрет в коллекцию
+        secret_dict = secret.model_dump()
+        await self.__collection.insert_one(secret_dict)
 
     async def get(self, secret_key: str) -> Optional[str]:
         """
