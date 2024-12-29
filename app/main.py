@@ -2,13 +2,14 @@ from contextlib import asynccontextmanager
 
 from authx.exceptions import JWTDecodeError
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.auth import security
 from app.core.config import DATABASE_NAME, MONGODB_URI, SALT
 from app.core.dependencies import create_secret_service_and_repository, create_user_service_and_repository
 from app.exceptions import jwt_decode_error_handler
 from app.models.secret import PassphraseRequest, SecretKeyResponse, SecretRequest, SecretResponse
-from app.models.user import UserRequest
+from app.models.user import MessageResponse, UserRequest
 
 
 @asynccontextmanager
@@ -40,8 +41,16 @@ app = FastAPI(lifespan=lifespan, title="One Time Secret API")
 
 app.add_exception_handler(JWTDecodeError, jwt_decode_error_handler)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-@app.post("/register", tags=["Authentication"])
+
+@app.post("/register", tags=["Authentication"], response_model=MessageResponse)
 async def register_user(request: UserRequest) -> dict:
     """
     Регистрация нового пользователя.
@@ -52,7 +61,7 @@ async def register_user(request: UserRequest) -> dict:
     :return: Ответ с сообщением об успешной регистрации.
     """
     await app.state.user_service.register_user(request.username, request.password)
-    return {"message": "User registered successfully"}
+    return MessageResponse(message="User registered successfully")
 
 
 @app.post("/login", tags=["Authentication"])
