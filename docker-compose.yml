@@ -1,18 +1,22 @@
 services:
+  fastapi:
+    container_name: fastapi
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/
+    depends_on:
+      - mongodb
+
   mongodb:
-    image: mongo:latest
     container_name: mongodb
+    image: mongo:latest
     ports:
       - "27017:27017"
     volumes:
-      - mongodb_data:/data/db
-    networks:
-      - mongo_network
-    restart: always
-
+      - mongodata:/data/db
 volumes:
-  mongodb_data:
-
-networks:
-  mongo_network:
-    driver: bridge
+  mongodata:
