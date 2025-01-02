@@ -9,7 +9,7 @@ async def test_register_existing_user(setup_service: None) -> None:
     """
     Проверяет регистрацию существующего пользователя.
     При попытке зарегистрировать пользователя с уже существующим именем,
-    ожидается ошибка с кодом 400 и сообщением "User already exists".
+    ожидается ошибка с кодом 409 и сообщением "User already exists".
     """
     username = "existing_user"
     password = "test_PASSWORD123#"
@@ -20,7 +20,7 @@ async def test_register_existing_user(setup_service: None) -> None:
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         response = await ac.post("/register", json={"username": username, "password": password})
 
-    assert response.status_code == 400
+    assert response.status_code == 409
     assert response.json() == {"detail": "User already exists"}
 
 
@@ -56,7 +56,7 @@ async def test_register_user_with_invalid_data(setup_service: None) -> None:
     Проверяет регистрацию пользователя с некорректными данными.
     При попытке зарегистрировать пользователя с именем, которое слишком короткое,
     или паролем, который не соответствует требованиям, ожидается ошибка с кодом 422
-    и соответствующим сообщением о ошибке.
+    и соответствующим сообщением об ошибке.
     """
     username = "us"  # Имя пользователя слишком короткое (меньше 3 символов)
     password = "12345"  # Пароль не содержит заглавных букв и специальных символов

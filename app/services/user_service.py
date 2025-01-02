@@ -50,4 +50,4 @@ class UserService:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
 
         token = security.create_access_token(uid=str(user.id))
-        return token  # Возврат токена
+        return token
