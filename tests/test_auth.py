@@ -12,7 +12,7 @@ async def test_register_existing_user(setup_service: None) -> None:
     ожидается ошибка с кодом 400 и сообщением "User already exists".
     """
     username = "existing_user"
-    password = "password123"
+    password = "test_PASSWORD123#"
 
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         await ac.post("/register", json={"username": username, "password": password})
@@ -41,7 +41,7 @@ async def test_login_invalid_credentials(setup_service: None) -> None:
     ожидается ошибка с кодом 401 и сообщением "Invalid credentials".
     """
     username = "invalid_user"
-    password = "wrong_password"
+    password = "test_PASSWORD123#_wrong"
 
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         response = await ac.post("/login", json={"username": username, "password": password})
