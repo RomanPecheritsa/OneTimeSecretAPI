@@ -1,13 +1,19 @@
 services:
   fastapi:
-    container_name: fastapi
-    build: .
+    container_name: fastapi_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - MONGO_URL=${MONGODB_URI}
+    command: >
+      sh -c "
+      uvicorn app.main:app --host 0.0.0.0 --port 8000
+      "
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app
-    environment:
-      - MONGO_URI=mongodb://mongodb:27017/
     depends_on:
       - mongodb
 
@@ -17,6 +23,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongodata:/data/db
+      - mongo-data:/data/db
+
 volumes:
-  mongodata:
+  mongo-data:
