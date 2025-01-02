@@ -65,4 +65,3 @@ async def test_register_user_with_invalid_data(setup_service: None) -> None:
         response = await ac.post("/register", json={"username": username, "password": password})
 
     assert response.status_code == 422
-
