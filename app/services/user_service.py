@@ -35,7 +35,7 @@ class UserService:
         Регистрирует нового пользователя.
         """
         if await self.repository.get_user(username):
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User already exists")
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="User already exists")
 
         hashed_password = self.hash_password(password)
         user = UserRequest(username=username, password=hashed_password)
