@@ -50,6 +50,12 @@ class User(BaseModel):
 
 
 class MessageResponse(BaseModel):
-    """Модель ответа"""
+    """Модель ответа при успешной регистрации"""
 
     message: str
+
+
+class TokenResponse(BaseModel):
+    """Модель ответа при успешной авторизации"""
+
+    access_token: str
