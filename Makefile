@@ -1,13 +1,18 @@
-
+DC=docker-compose
 CONTAINER_NAME=fastapi_app
-
 CODE_DIR=app
-
-TEST_DIR=tests
-
 PYTEST_OPTS=--cov=$(CODE_DIR) --cov-report=term
 
-.PHONY: test
+.PHONY: tests tests-cov app app-down
 
-test:
+tests:
+	docker exec -it $(CONTAINER_NAME) pytest
+
+tests-cov:
 	docker exec -it $(CONTAINER_NAME) pytest $(PYTEST_OPTS)
+
+app:
+	$(DC) up --build -d
+
+app-down:
+	${DC} down
