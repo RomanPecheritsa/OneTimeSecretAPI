@@ -20,7 +20,7 @@ async def test_register_existing_user(setup_service: None) -> None:
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         response = await ac.post("/register", json={"username": username, "password": password})
 
-    assert response.status_code == 400
+    assert response.status_code == 409
     assert response.json() == {"detail": "User already exists"}
 
 
